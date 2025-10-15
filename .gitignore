@@ -50,3 +50,17 @@ screenshots/*.png
 # Environment variables
 .env
 .env.local
+SESSION_CONTEXT.md
+
+# Development files - not for production
+SESSION_CONTEXT.md
+CLAUDE.md
+GIT.md
+plan.md
+rules.md
+chrome-devtools-*.md
+docs/
+screenshots/
+tmp/
+*.Zone.Identifier
+
