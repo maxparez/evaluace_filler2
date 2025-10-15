@@ -376,9 +376,11 @@ class FormFiller:
                 # Use enhanced normalization that removes parentheses
                 normalized_topic = normalize_for_checkbox_matching(topic)
 
-                # Find checkbox by label match
+                # Find checkbox by label match (first word comparison)
                 checked = page.evaluate(f"""(topicNorm) => {{
                     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                    const topicFirstWord = topicNorm.split(' ')[0];
+
                     for (const cb of checkboxes) {{
                         const label = cb.nextElementSibling;
                         if (label && label.textContent) {{
@@ -389,7 +391,17 @@ class FormFiller:
                                 .replace(/[\u0300-\u036f]/g, "")
                                 .replace(/\\s+/g, " ")
                                 .trim();
+                            const labelFirstWord = labelNorm.split(' ')[0];
+
+                            // Try exact match first
                             if (labelNorm === topicNorm) {{
+                                cb.checked = true;
+                                cb.dispatchEvent(new Event('change', {{bubbles: true}}));
+                                return true;
+                            }}
+
+                            // Fallback: match first word if exact match fails
+                            if (labelFirstWord === topicFirstWord && topicFirstWord.length > 3) {{
                                 cb.checked = true;
                                 cb.dispatchEvent(new Event('change', {{bubbles: true}}));
                                 return true;
