@@ -163,17 +163,11 @@ python main.py data/config.json --verbose
 python main.py data/config.json --headed --code ABC123 --verbose
 ```
 
-### Příklady s testovacími daty
+### Příklady použití
 
 ```bash
-# MŠ pouze
-python main.py data/Bruntal_Pionyrska_MS_360_consolidated.json --headed
-
-# ZŠ pouze
-python main.py data/Kravare_Kouty_ZS_4620_consolidated.json --headed
-
-# MŠ + ZŠ kombinace
-python main.py data/Ostrava_Radvanice_Vrchlickeho_ZS_6660_consolidated.json --headed
+# Spuštění s vlastním JSON souborem
+python main.py path/to/your-config.json --headed
 ```
 
 ### Nápověda
@@ -217,27 +211,36 @@ Skript vytváří dva výstupy:
 ### Příklad console výstupu
 
 ```
-20:40:06 | 📁 Log file: logs/form_filler_20251014_204006.log
-20:40:06 |
-20:40:06 | ============================================================
-20:40:06 |   LimeSurvey Form Filler Started
-20:40:06 | ============================================================
-20:40:06 | School: Bruntal_Pionyrska_MS_360
-20:40:06 | Code: 00X2ic
-20:40:06 | School types: MS
-20:40:06 |
-20:40:06 | 📄 Page 1: Introduction page
-20:40:10 | 📄 Page 2: MŠ - Školní asistent
-20:40:10 |   ✏️  Školní rok 2022/2023: 34
-20:40:10 |   ✏️  Školní rok 2023/2024: 41
-20:40:14 | 📄 Page 3: MŠ - DVPP témata (checkboxes)
-20:40:14 | Checking 5 checkboxes
-20:40:14 |   ✓ pedagogická diagnostika
-20:40:14 |   ✓ inkluze
-20:40:18 | 📄 Page 4: MŠ - DVPP počty
-20:40:18 | Filling 20 fields (5 topics × 4 years)
-20:40:18 |   📊 pedagogická diagnostika | 2022/2023: 34
-20:40:22 | ✅ Form completed successfully!
+08:04:11 | 📁 Log file: logs/form_filler_20251015_080411.log
+08:04:11 |
+08:04:11 | ============================================================
+08:04:11 |   LimeSurvey Form Filler Started
+08:04:11 | ============================================================
+08:04:11 | School: School_Name
+08:04:11 | Code: ******
+08:04:11 | School types: ZS, SD
+08:04:12 |
+08:04:12 | ============================================================
+08:04:12 |   Login
+08:04:12 | ============================================================
+08:04:18 | ✅ Logged in
+08:04:18 |
+08:04:18 | 📄 Page 1: ŠD - SDP/ŽZOR témata (checkboxes)
+08:04:18 | Checking 6 checkboxes
+08:04:18 |   ✓ umělecká gramotnost
+08:04:18 |   ✓ inkluze včetně primární prevence
+08:04:23 | 📄 Page 2: ŠD - SDP/ŽZOR počty (exact from JSON)
+08:04:23 | Filling 24 fields (6 topics × 4 years, last year empty)
+08:04:23 | Filled 20 fields
+08:04:27 | 📄 Page 3: OMJ národnosti (skip)
+08:04:27 | ⏭️  Skipping OMJ národnosti (skip): Per business rules
+08:04:31 | 📄 Page 4: Vedoucí pracovníci (fill 0)
+08:04:31 | Filled 2 fields with 0
+08:04:35 | ✅ Form completed successfully!
+08:04:35 |
+08:04:35 | ============================================================
+08:04:35 |   ✅ DONE
+08:04:35 | ============================================================
 ```
 
 ### Emoji legenda
@@ -342,29 +345,26 @@ inputs[i].dispatchEvent(new Event('change', {bubbles: true}));
 
 ## 🧪 Testování
 
-### Testovací data
-
-V adresáři `data/` jsou připravena testovací data:
-
-| Soubor | Škola | MS | ZS | SD | Popis |
-|--------|-------|----|----|----|----|
-| `Bruntal_Pionyrska_MS_360_consolidated.json` | Bruntál Pionýrská | 97 | 0 | 0 | ✅ Otestováno |
-| `Krnov_Jiraskova_MS_742_consolidated.json` | Krnov Jiráskova | 80 | 0 | 0 | MŠ pouze |
-| `Kravare_Kouty_ZS_4620_consolidated.json` | Kravaře Kouty | 0 | 73 | 0 | ZŠ pouze |
-| `Ostrava_Radvanice_Vrchlickeho_ZS_6660_consolidated.json` | Ostrava Radvanice | 73 | 89 | 0 | MŠ + ZŠ |
-| `Ostrava_soukroma_specialni_sro_ZS_5515_consolidated.json` | Ostrava soukromá | 0 | 72 | 41 | ZŠ + ŠD |
-
 ### Manuální test
 
 ```bash
 # Test v headed mode (doporučeno pro první spuštění)
-python main.py data/Bruntal_Pionyrska_MS_360_consolidated.json --headed --verbose
+python main.py path/to/your-config.json --headed --verbose
 
 # Sledujte:
 # - Správné přihlášení
 # - Vyplnění všech stránek
 # - Finální zprávu: "Děkujeme Vám! Vaše odpovědi byly uloženy."
 ```
+
+### Co testovat
+
+- ✅ Login s přístupovým kódem
+- ✅ Detekce typu školy (MŠ/ZŠ/ŠD)
+- ✅ Vyplnění checkboxů podle JSON
+- ✅ Vyplnění počtů (náhodné vs. přesné)
+- ✅ Přeskočení OMJ stránky
+- ✅ Dokončení s úspěšnou zprávou
 
 ---
 
@@ -409,14 +409,6 @@ python main.py data/Bruntal_Pionyrska_MS_360_consolidated.json --headed --verbos
 - Formulář musí být dostupný na uvedené URL
 
 ---
-
-## 📚 Další dokumentace
-
-- **`plan.md`** - Implementační plán a fáze
-- **`rules.md`** - Business pravidla (původní specifikace)
-- **`SESSION_CONTEXT.md`** - Aktuální status a quick start guide
-- **`docs/workflow_mapping.md`** - Detailní mapování stránek
-- **`docs/exploration_findings.md`** - Technické poznatky z explorace
 
 ---
 

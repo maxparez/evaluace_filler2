@@ -22,19 +22,19 @@ def main():
         epilog="""
 Examples:
   # Run with default settings (headless)
-  python main.py data/Bruntal_Pionyrska_MS_360_consolidated.json
+  python main.py path/to/config.json
 
   # Run with visible browser (headed mode)
-  python main.py data/config.json --headed
+  python main.py path/to/config.json --headed
 
   # Override access code
-  python main.py data/config.json --code ABC123
+  python main.py path/to/config.json --code ABC123
 
   # Verbose logging
-  python main.py data/config.json --verbose
+  python main.py path/to/config.json --verbose
 
   # All options combined
-  python main.py data/config.json --headed --code XYZ789 --verbose
+  python main.py path/to/config.json --headed --code XYZ789 --verbose
         """
     )
 
