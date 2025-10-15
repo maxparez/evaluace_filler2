@@ -63,5 +63,7 @@ docs/
 screenshots/
 tmp/
 *.Zone.Identifier
+QUICKSTART.md
+START_HERE.md
 
 data/
