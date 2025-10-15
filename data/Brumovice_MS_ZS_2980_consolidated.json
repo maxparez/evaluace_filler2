@@ -1,0 +1,24 @@
+{
+  "school_name": "Brumovice_MS_ZS_2980",
+  "code": "",
+  "MS": 50,
+  "ZS": 54,
+  "SD": 43,
+  "dvpp_topics": {
+    "vzdělávání_MŠ_1_I_4": [
+      "inkluze",
+      "spolupráce s rodiči a zákonnými zástupci dětí a žáků"
+    ],
+    "vzdělávání_ZŠ_1_II_7": [
+      "řízení organizace, leadership a řízení pedagogického procesu",
+      "čtenářská gramotnost"
+    ],
+    "vzdělávání_ŠD_ŠK_1_V_1": [
+      "inkluze",
+      "přírodovědné a technické vzdělávání",
+      "zážitková pedagogika",
+      "well-being a psychohygiena",
+      "alternativní/inovativní formy výuky"
+    ]
+  }
+}
